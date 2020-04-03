@@ -24,3 +24,4 @@ Depois de baixar o arquivo, descompacte e coloque-o na pasta **dataset/**.
 
 Caso prefira no formato original, segue o link:
 IMDB dataset: https://www.cs.cornell.edu/people/pabo/movie-review-data/review_polarity.tar.gz
+
