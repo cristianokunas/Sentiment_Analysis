@@ -1,5 +1,5 @@
 # Sentiment_Analysis
-IA para classificação de sentimentos. Keras+Tensorflow+RNN(Recurrent Neural Network)-LSTM(Long Short-Term Memory)
+IA aplicada na Análise de Sentimentos em textos. Keras+Tensorflow+RNN(Recurrent Neural Network)-LSTM(Long Short-Term Memory).
 
 ## Dependências
 
