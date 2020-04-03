@@ -10,7 +10,10 @@ Pacotes necessários:
 * keras
 * tensorflow-gpu
 * sklearn
-* nltk	>>>import nltk	>>>nltk.download('stopwords')
+* nltk
+>>>import nltk
+
+>>>nltk.download('stopwords')
 * matplotlib
 
 
