@@ -1,12 +1,13 @@
 import os
 import re
+import time
 
 import numpy as np
 import pandas as pd
-from keras.layers import Dense
+from keras.layers import Dense, Input
 from keras.layers import Embedding
 from keras.layers import LSTM  # , Bidirectional
-from keras.models import Sequential
+from keras.models import Sequential, Model
 from keras.preprocessing.sequence import pad_sequences
 from keras.preprocessing.text import Tokenizer
 from keras.preprocessing.text import text_to_word_sequence
@@ -19,18 +20,25 @@ np.random.seed(seed)
 # O model sera exportado para este arquivo
 filename = 'model/model_saved.h5'
 # numero de iteracoes
-epochs = 10  # email - 150
+epochs = 5  # email - 150
 # numero de amostras a serem utilizadas em cada atualizacao do gradiente - numero de instancias
 batch_size = 32  # email - 10
 # separa % para teste do modelo
 test_dim = 0.20
 # Quantidade maxima de palavras para manter no vocabulario
-max_fatures = 5000
+max_fatures = 5000 # 20000
 # dimensao de saida da camada Embedding
 embed_dim = 128
 
 # Tamanho maximo das sentencas
 max_sequence_length = 300
+
+#Calcula tempo de execucao
+def calcRuntime(totalTime):
+  hours, rem = divmod(totalTime, 3600)
+  minutes, seconds = divmod(rem, 60)
+  formatTime = "{:0>2}:{:0>2}:{:05.2f}".format(int(hours),int(minutes),seconds)
+  return formatTime
 
 # metodo para limpar as strings - tirar conteudo que nao agrega
 def clean_str(string):
@@ -101,17 +109,27 @@ print(X_test.shape, Y_test.shape)
 
 
 # Cria o modelo
-def model():
+def sequential():
     model = Sequential()
     model.add(Embedding(max_fatures, embed_dim, input_length=max_sequence_length))
     model.add(LSTM(embed_dim, dropout=0.2, recurrent_dropout=0.2, name="lstm"))
-    model.add(Dense(12, input_dim=8, init='uniform', activation='relu'))
-    model.add(Dense(8, init='uniform', activation='relu'))
+    model.add(Dense(128, input_dim=128, init='uniform', activation='relu')) #  input_dim=128
+    model.add(Dense(16, init='uniform', activation='relu'))
     model.add(Dense(2, init='uniform', activation='sigmoid'))
     return model
 
+# Cria o modelo
+def model():
+    input_shape = (max_sequence_length,)
+    model_input = Input(shape=input_shape, name="input", dtype='int32')
+    embedding = Embedding(max_fatures, embed_dim, input_length=max_sequence_length, name="embedding")(model_input)
+    lstm = LSTM(embed_dim, dropout=0.2, recurrent_dropout=0.2, name="lstm")(embedding)
+    model_output = Dense(2, activation='softmax', name="softmax")(lstm)
+    model = Model(inputs=model_input, outputs=model_output)
+    return model
 
-# Ccriacao do modelo
+# Criacao do modelo
+model = sequential()
 model = model()
 # compilacao do modelo
 model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
@@ -120,10 +138,16 @@ print(model.summary())
 
 # Treinamento da rede neural
 # Verifica se existe um modelo treinado
-# True = treina a rede e salva o modelo
-# False =
+# True = carrega o modelo ja treinado
+# False = treina a rede e salva o modelo
+inicio = time.time()
+
 if os.path.exists('./{}'.format(filename)):
-    model.load_weights('./{}'.format(filename))
+    try:
+        model.load_weights('./{}'.format(filename))
+        print('Successful model loading!')
+    except:
+        print('No such file or directory!')
 else:
     hist = model.fit(
         X_train,
@@ -131,12 +155,18 @@ else:
         validation_data=(X_test, Y_test),
         epochs=epochs,
         batch_size=batch_size)
+    try:
+        model.save_weights(filename)
+    except:
+        print('An error has occurred. Could not save the file!')
 
-    model.save_weights(filename)
+fim = time.time()
+print(calcRuntime(fim - inicio))
 
 # Avaliando o modelo
 scores = model.evaluate(X_test, Y_test, verbose=0, batch_size=batch_size)
-print("Acc: %.2f%%" % (scores[1] * 100))
+print("Accuracy: %.2f%%" % (scores[1] * 100))
+print("Erro: %.2f%%" % (scores[0] * 100))
 
 while True:
     print("\nType 0 to quit")
