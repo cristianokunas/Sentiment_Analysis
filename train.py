@@ -6,13 +6,13 @@ import numpy as np
 import pandas as pd
 
 from tensorflow.keras.callbacks import ReduceLROnPlateau, EarlyStopping, ModelCheckpoint
-from tensorflow.keras.layers import Dense, Input
-from tensorflow.keras.layers import Embedding
-from tensorflow.keras.layers import LSTM  # , Bidirectional
+from tensorflow.keras.layers import Dense, Input, Embedding, LSTM  # , Bidirectional
 from tensorflow.keras.models import Sequential, Model
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 from tensorflow.keras.preprocessing.text import Tokenizer
 from tensorflow.keras.preprocessing.text import text_to_word_sequence
+# import para plotar o modelo
+from tensorflow.keras.utils import plot_model
 from sklearn.model_selection import train_test_split
 from nltk.corpus import stopwords
 #import matplotlib.pyplot as plt
@@ -103,9 +103,13 @@ def prepare_data(data):
     return X_train, X_test, Y_train, Y_test, word_index, tokenizer
 
 with tf.device("/gpu:0"):
-# with tf.device("/gpu:0"):
+    # with tf.device("/cpu:0"):
     # Carrega o arquivo de dados .csv
     data = pd.read_csv('./dataset/imdb.csv')
+    #descriptions
+    print(data.describe())
+    # class distribution
+    # print(data.groupby('class').size())
 
     # chama metodo para preparar dados
     X_train, X_test, Y_train, Y_test, word_index, tokenizer = prepare_data(data)
@@ -114,7 +118,7 @@ with tf.device("/gpu:0"):
     print(X_test.shape, Y_test.shape)
 
 
-    # Cria o modelo
+    # Cria o modelo - sequencial
     def sequential():
         model = Sequential()
         model.add(Embedding(max_fatures, embed_dim, input_length=max_sequence_length))
@@ -122,9 +126,10 @@ with tf.device("/gpu:0"):
         #model.add(Dense(128, input_dim=128, kernel_initializer='uniform', activation='relu')) #  input_dim=128
         #model.add(Dense(16, kernel_initializer='uniform', activation='relu'))
         model.add(Dense(2, kernel_initializer='uniform', activation='sigmoid'))
+        plot_model(model, to_file='model.png', show_shapes=True)
         return model
 
-    # Cria o modelo
+    # Cria o modelo - API funcional
     def model():
         input_shape = (max_sequence_length,)
         model_input = Input(shape=input_shape, name="input")
@@ -141,9 +146,11 @@ with tf.device("/gpu:0"):
     # Criacao do modelo
     #model = sequential()
     model = model()
+
     # compilacao do modelo
     model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
 
+    # Condicao de parada no treinamento da rede
     lr_reducer = ReduceLROnPlateau(monitor='val_loss', factor = 0.9, patience=3, verbose = 1)
     early_stopper = EarlyStopping(monitor='val_loss', min_delta=0, patience = 8, verbose = 1, mode = 'auto')
     checkpointer = ModelCheckpoint(filename, monitor='val_loss', verbose = 1, save_best_only=True)
