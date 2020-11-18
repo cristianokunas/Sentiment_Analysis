@@ -6,7 +6,7 @@ Keras+Tensorflow+LSTM
 ## Dependências
 
 Pacotes necessários:
-```
+
 * numpy
 * pandas
 * keras
@@ -15,7 +15,7 @@ Pacotes necessários:
 * nltk
 >>>import nltk  <br />
 >>>nltk.download('stopwords')
-```
+
 
 ## Onde baixar o dataset
 
