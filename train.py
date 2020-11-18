@@ -9,21 +9,16 @@ from keras.callbacks import ReduceLROnPlateau, EarlyStopping, ModelCheckpoint, T
 from keras.layers import Dense, Input, Embedding, LSTM
 from keras.models import Sequential, Model
 from keras.preprocessing.sequence import pad_sequences
-from keras.preprocessing.text import Tokenizer
-from keras.preprocessing.text import text_to_word_sequence
+from keras.preprocessing.text import Tokenizer, text_to_word_sequence
 from sklearn.model_selection import train_test_split
 from nltk.corpus import stopwords
-import matplotlib.pyplot as plt
 import tensorflow as tf
 
 seed = 7
 np.random.seed(seed)
-path1 = 'ep5gpu/'
-path2 = 'bs32'
 # O model sera exportado para este arquivo
-filename = 'model/'+path1+'model_' + path2 + '.h5'
-# filename = 'model/model_ep5bs32mf20000ed128ms300dr128-64dr64ds2-teste1.h5'#dr128-64dr64# numero de iteracoes
-epochs = 5  # email - 150
+filename = 'model/model_saved.h5'
+epochs = 5 
 # numero de amostras a serem utilizadas em cada atualizacao do gradiente - numero de instancias
 batch_size = 32
 # separa % para teste do modelo
@@ -99,8 +94,7 @@ def prepare_data(data):
     X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=test_dim, random_state=42)
 
     return X_train, X_test, Y_train, Y_test, word_index, tokenizer
-
-    # with tf.device("/cpu:0"):
+# Especifica o device a ser utilizado
 with tf.device("/gpu:0"):
     # Carrega o arquivo de dados .csv
     data = pd.read_csv('./dataset/imdb.csv')
@@ -111,18 +105,7 @@ with tf.device("/gpu:0"):
     X_train, X_test, Y_train, Y_test, word_index, tokenizer = prepare_data(data)
     print(X_train.shape, Y_train.shape)
     print(X_test.shape, Y_test.shape)
-
-    # Cria o modelo - sequencial
-    def sequential():
-        model = Sequential()
-        model.add(Embedding(max_fatures, embed_dim, input_length=max_sequence_length))
-        model.add(LSTM(embed_dim, dropout=0.2, recurrent_dropout=0.2, name="lstm"))
-        model.add(Dense(128, input_dim=64, kernel_initializer='uniform', activation='relu'))
-        model.add(Dense(64, kernel_initializer='uniform', activation='relu'))
-        model.add(Dense(2, kernel_initializer='uniform', activation='sigmoid'))
-        return model
-
-    # Cria o modelo - API funcional
+    
     def model():
         input_shape = (max_sequence_length,)
         model_input = Input(shape=input_shape, dtype="int32")
@@ -134,18 +117,13 @@ with tf.device("/gpu:0"):
         model = Model(inputs=model_input, outputs=model_output)
         return model
 
-
-    # lstm2 = LSTM(embed_dim, dropout=0.2, recurrent_dropout=0.2, return_sequences=True)(lstm1)
-
     # Criacao do modelo
-    #model = sequential()
     model = model()
 
     # compilacao do modelo
     model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
 
     log_dir = "logs/fit/" + path1 + path2 +'/'
-    #datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
     tensorboard_callback = TensorBoard(log_dir=log_dir, histogram_freq=1)
 
     # # Condicao de parada no treinamento da rede
