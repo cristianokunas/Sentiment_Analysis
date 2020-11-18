@@ -18,7 +18,7 @@ Pacotes necessários:
 
 ### Dataset
 
-Você pode baixá-lo neste link: https://drive.google.com/open?id=1iwjVCOO1K_rnzRIv6fq64V4g4isGyxip .
+Você pode baixá-lo [aqui](https://drive.google.com/open?id=1iwjVCOO1K_rnzRIv6fq64V4g4isGyxip). <br />
 Depois de baixar o arquivo, descompacte e coloque-o na pasta **dataset/**.
 
 ### Documentos
