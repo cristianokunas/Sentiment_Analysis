@@ -1,5 +1,5 @@
 ### Sentiment_Analysis
-Neste trabalho, apresentamos um modelo de Rede Neural Artificial para análise dos sentimentos em sentenças em língua inglesa. A Rede Neural Artificial Recursiva Long Short-Term Memory foi implementada para o treinamento do modelo de análise de sentimentos. Com a aplicação da RNA desenvolvida sobre uma base de dados pública com 50.000 registros de filmes usando GPU foi possível reduzir o tempo de treinamento das RNAs em até 91,8% e aumentar a acurácia para 87,7%.
+Rede Neural Artificial para análise de sentimentos em sentenças em língua inglesa. A Rede Neural Artificial Recursiva Long Short-Term Memory foi implementada para o treinamento do modelo de análise. Com a aplicação da RNA desenvolvida sobre uma base de dados pública com 50.000 registros de filmes usando GPU foi possível reduzir o tempo de treinamento das RNAs em até 91,8% e aumentar a acurácia para 87,7%.
 
 Keras+Tensorflow+LSTM
 
