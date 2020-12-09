@@ -25,8 +25,7 @@ Pacotes necessários:
 * keras
 * tensorflow-gpu
 * sklearn
-* nltk
-> * nltk.download('stopwords')
+* nltk -> nltk.download('stopwords')
 
 ## Author
 
@@ -38,4 +37,4 @@ Pacotes necessários:
 ## 📝 License
 
 Copyright © 2020 [Cristiano Alex Künas](https://github.com/cristianokunas).<br />
-This project is [MIT](https://github.com/cristianokunas/SentimentAnalysis_onColab/blob/main/LICENSE) licensed.
+This project is [GPL-3.0](https://github.com/cristianokunas/Sentiment_Analysis/blob/master/LICENSE) licensed.
