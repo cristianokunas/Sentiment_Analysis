@@ -5,7 +5,7 @@
     <img alt="License: GPL-3.0 License" src="https://img.shields.io/badge/Licence-GPL--3.0-important" />
   </a>
   <a href="https://github.com/cristianokunas/Sentiment_Analysis/blob/master/documents/209665_1.pdf">
-    <img alt="Resumo Espandido" src="https://img.shields.io/badge/Resumo%20Espandido-WSCAD--WIC-76B900?logo=read-the-docs&logoColor=white"/>
+    <img alt="Resumo Espandido" src="https://img.shields.io/badge/Resumo%20Espandido-WSCAD--WIC-blueviolet?logo=read-the-docs&logoColor=white"/>
   </a>
 </p>
 
@@ -36,5 +36,4 @@ Pacotes necessários:
 
 ## 📝 License
 
-Copyright © 2020 [Cristiano Alex Künas](https://github.com/cristianokunas).<br />
-This project is [GPL-3.0](https://github.com/cristianokunas/Sentiment_Analysis/blob/master/LICENSE) licensed.
+Copyright © 2020 [Cristiano Alex Künas](https://github.com/cristianokunas).
