@@ -1,5 +1,7 @@
 # Modelos criados
 **/model/*.h5
+model/
+word_embedding/
 
 ### JupyterNotebooks ###
 # gitignore template for Jupyter Notebooks
