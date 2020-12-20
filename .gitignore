@@ -1,7 +1,5 @@
 # Modelos criados
 **/model/*.h5
-model/
-word_embedding/
 
 ### JupyterNotebooks ###
 # gitignore template for Jupyter Notebooks
@@ -247,3 +245,8 @@ dmypy.json
 .pytype/
 
 # End of https://www.toptal.com/developers/gitignore/api/python,pycharm,jupyternotebooks
+
+.idea/
+model/
+word_embedding/
+logs/
