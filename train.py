@@ -4,7 +4,9 @@ import time
 
 import numpy as np
 import pandas as pd
+import datetime
 
+import tensorflow as tf
 from keras.callbacks import ReduceLROnPlateau, EarlyStopping, ModelCheckpoint, TensorBoard
 from keras.layers import Dense, Input, Embedding, LSTM
 from keras.models import Sequential, Model
@@ -12,13 +14,12 @@ from keras.preprocessing.sequence import pad_sequences
 from keras.preprocessing.text import Tokenizer, text_to_word_sequence
 from sklearn.model_selection import train_test_split
 from nltk.corpus import stopwords
-import tensorflow as tf
 
 seed = 7
 np.random.seed(seed)
 # O model sera exportado para este arquivo
-filename = 'model/model_saved.h5'
-epochs = 2
+filename = 'model/model_ep50bs1024lstm.h5'
+epochs = 50
 # numero de amostras a serem utilizadas em cada atualizacao do gradiente - numero de instancias
 batch_size = 1024
 # separa % para teste do modelo
@@ -123,8 +124,8 @@ with tf.device("/gpu:0"):
     # compilacao do modelo
     model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
 
-    # log_dir = "logs/fit/" + path1 + path2 +'/'
-    # tensorboard_callback = TensorBoard(log_dir=log_dir, histogram_freq=1)
+    # log_dir = "logsssssss/fit/" + datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
+    # tensorboard_callback = tf.keras.callbacks.TensorBoard(log_dir=log_dir, histogram_freq=1)
 
     # # Condicao de parada no treinamento da rede
     # lr_reducer = ReduceLROnPlateau(monitor='val_loss', factor = 0.9, patience=3, verbose = 1)
@@ -153,7 +154,7 @@ with tf.device("/gpu:0"):
             epochs=epochs,
             batch_size=batch_size,
             verbose=1,
-            shuffle=True) #, callbacks=[tensorboard_callback]) #lr_reducer, early_stopper, checkpointer,
+            shuffle=True)#, callbacks=[tensorboard_callback]) #lr_reducer, early_stopper, checkpointer,
         try:
             model.save_weights(filename)
         except:
@@ -167,22 +168,22 @@ with tf.device("/gpu:0"):
     print("Accuracy: %.2f%%" % (scores[1] * 100))
     print("Erro: %.2f%%" % (scores[0] * 100))
 
-while True:
-    print("\nType 0 to quit")
-    sentence = input("input> ")
-    if sentence == "0":
-        break
-
-    new_text = [sentence]
-    new_text = tokenizer.texts_to_sequences(new_text)
-
-    new_text = pad_sequences(new_text, maxlen=max_sequence_length, value=0)
-
-    sentiment = model.predict(new_text, batch_size=1, verbose=2)[0]
-
-    if (np.argmax(sentiment) == 0):
-        pred_proba = "%.2f%%" % (sentiment[0] * 100)
-        print("negativo => ", pred_proba)
-    elif (np.argmax(sentiment) == 1):
-        pred_proba = "%.2f%%" % (sentiment[1] * 100)
-        print("positivo => ", pred_proba)
+# while True:
+#     print("\nType 0 to quit")
+#     sentence = input("input> ")
+#     if sentence == "0":
+#         break
+#
+#     new_text = [sentence]
+#     new_text = tokenizer.texts_to_sequences(new_text)
+#
+#     new_text = pad_sequences(new_text, maxlen=max_sequence_length, value=0)
+#
+#     sentiment = model.predict(new_text, batch_size=1, verbose=2)[0]
+#
+#     if (np.argmax(sentiment) == 0):
+#         pred_proba = "%.2f%%" % (sentiment[0] * 100)
+#         print("negativo => ", pred_proba)
+#     elif (np.argmax(sentiment) == 1):
+#         pred_proba = "%.2f%%" % (sentiment[1] * 100)
+#         print("positivo => ", pred_proba)
