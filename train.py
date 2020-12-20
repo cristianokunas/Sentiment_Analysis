@@ -18,9 +18,9 @@ seed = 7
 np.random.seed(seed)
 # O model sera exportado para este arquivo
 filename = 'model/model_saved.h5'
-epochs = 5 
+epochs = 2
 # numero de amostras a serem utilizadas em cada atualizacao do gradiente - numero de instancias
-batch_size = 32
+batch_size = 1024
 # separa % para teste do modelo
 test_dim = 0.20
 # Quantidade maxima de palavras para manter no vocabulario
@@ -123,8 +123,8 @@ with tf.device("/gpu:0"):
     # compilacao do modelo
     model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
 
-    log_dir = "logs/fit/" + path1 + path2 +'/'
-    tensorboard_callback = TensorBoard(log_dir=log_dir, histogram_freq=1)
+    # log_dir = "logs/fit/" + path1 + path2 +'/'
+    # tensorboard_callback = TensorBoard(log_dir=log_dir, histogram_freq=1)
 
     # # Condicao de parada no treinamento da rede
     # lr_reducer = ReduceLROnPlateau(monitor='val_loss', factor = 0.9, patience=3, verbose = 1)
@@ -153,8 +153,7 @@ with tf.device("/gpu:0"):
             epochs=epochs,
             batch_size=batch_size,
             verbose=1,
-            shuffle=True,
-            callbacks=[tensorboard_callback]) #lr_reducer, early_stopper, checkpointer,
+            shuffle=True) #, callbacks=[tensorboard_callback]) #lr_reducer, early_stopper, checkpointer,
         try:
             model.save_weights(filename)
         except:
