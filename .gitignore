@@ -27,8 +27,8 @@ ipython_config.py
 .idea/**/usage.statistics.xml
 .idea/**/dictionaries
 .idea/**/shelf
-.idea/misc.xml
-.idea/Sentiment_Analysis.iml
+.idea/**/misc.xml
+.idea/**/Sentiment_Analysis.iml
 
 # Generated files
 .idea/**/contentModel.xml
