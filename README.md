@@ -18,14 +18,20 @@ Depois de baixar o arquivo, descompacte e coloque-o na pasta **dataset/**.
 
 ## Dependências
 
+* CUDA Toolkit 11.1
+
 Pacotes necessários:
 
-* numpy
-* pandas
-* keras
-* tensorflow-gpu
-* sklearn
-* nltk -> nltk.download('stopwords')
+* tensorflow==2.4.0
+* tensorflow-gpu==2.4.0
+* numpy==1.19.4
+* scipy==1.5.4
+* keras==2.4.3
+* pandas==1.1.5
+* sklearn==0.23.2
+* nltk==3.5
+* tqdm==4.54.1
+
 
 ## Author
 
