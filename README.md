@@ -19,7 +19,7 @@ Depois de baixar o arquivo, descompacte e coloque-o na pasta **dataset/**.
 ## Dependências
 
 * Python 3.8
-* CUDA Toolkit 11.1
+* CUDA Toolkit 10.0.130
 
 ```
 pip3 install -r documents/requirements.txt
