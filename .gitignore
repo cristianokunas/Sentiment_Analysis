@@ -250,3 +250,4 @@ dmypy.json
 model/
 word_embedding/
 logs/
+requires.txt
