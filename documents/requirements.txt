@@ -1,4 +1,4 @@
-tensorflow==2.4.0
+tensorflow==2.5.0
 tensorflow-gpu==2.4.0
 keras==2.4.3
 numpy==1.19.4
