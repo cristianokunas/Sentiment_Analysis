@@ -23,6 +23,7 @@ Depois de baixar o arquivo, descompacte e coloque-o na pasta **dataset/**.
 
 ```
 pip3 install -r documents/requirements.txt
+python3 -m nltk.downloader stopwords
 ```
 
 
