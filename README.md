@@ -26,6 +26,11 @@ pip3 install -r documents/requirements.txt
 python3 -m nltk.downloader stopwords
 ```
 
+## Execute
+```
+python3 main.py
+```
+
 
 ## Author
 
