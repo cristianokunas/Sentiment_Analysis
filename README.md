@@ -5,7 +5,7 @@
     <img alt="License: GPL-3.0 License" src="https://img.shields.io/badge/Licence-GPL--3.0-important" />
   </a>
   <a href="https://github.com/cristianokunas/Sentiment_Analysis/blob/master/documents/209665_1.pdf">
-    <img alt="Resumo Espandido" src="https://img.shields.io/badge/Resumo%20Espandido-WSCAD--WIC-blueviolet?logo=read-the-docs&logoColor=white"/>
+    <img alt="Resumo Expandido" src="https://img.shields.io/badge/Resumo%20Espandido-WSCAD--WIC-blueviolet?logo=read-the-docs&logoColor=white"/>
   </a>
 </p>
 
